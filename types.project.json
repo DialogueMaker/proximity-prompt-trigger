@@ -1,0 +1,13 @@
+{
+  "name": "proximity-prompt-trigger",
+  "tree": {
+    "$className": "DataModel",
+    "proximity-prompt-trigger": {
+      "$path": "Packages",
+      "$ignoreUnknownInstances": true,
+      "proximity-prompt-trigger": {
+        "$path": "src"
+      }
+    }
+  }
+}
