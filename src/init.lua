@@ -7,11 +7,10 @@
 local CollectionService = game:GetService("CollectionService");
 
 local packages = script.Parent.roblox_packages;
-local IClient = require(packages.client_types);
-local IConversation = require(packages.conversation_types);
+local DialogueMakerTypes = require(packages.dialogue_maker_types);
 
-type Client = IClient.Client;
-type Conversation = IConversation.Conversation;
+type Client = DialogueMakerTypes.Client;
+type Conversation = DialogueMakerTypes.Conversation;
 
 return function(client: Client)
 
@@ -35,22 +34,19 @@ return function(client: Client)
 
         proximityPrompt.Triggered:Connect(function()
 
-          proximityPrompt.Enabled = false;
-          client:interact(conversation);
+          local dialogue = conversation:findNextVerifiedDialogue();
+          if dialogue then
+
+            proximityPrompt.Enabled = false;
+            client:setDialogue(dialogue);
+
+          end;
 
         end);
 
-        client.ConversationChanged:Connect(function()
+        client.DialogueChanged:Connect(function()
 
-          if client:getConversation() == nil then
-
-            proximityPrompt.Enabled = true;
-
-          else
-
-            proximityPrompt.Enabled = false;
-
-          end;
+          proximityPrompt.Enabled = client:getDialogue() == nil;
 
         end);
 
